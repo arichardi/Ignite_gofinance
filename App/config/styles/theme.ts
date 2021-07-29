@@ -12,9 +12,10 @@ export default {
         attention: '#e83f5b',
         attention_light: 'rgba(232, 63, 91, 0.5)',
 
-        shape: '#DDD',
+        shape: '#FFF',
         title: '#363f5f',
         text: '#969cb2',
+        text_dark: '#000',
         background: '#f0f2f5',
     },
 

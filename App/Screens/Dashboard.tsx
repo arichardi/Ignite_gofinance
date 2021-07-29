@@ -1,5 +1,6 @@
 import React from 'react'
-
+import HighlightCard from '../components/HighlightCard'
+import { StatusBar} from 'react-native'
 import { 
     Container,
     Title,
@@ -10,11 +11,14 @@ import {
     UserGreeting,
     UserName,
     UserWrapper,
+    Icon,
+    ScrollCards,
  } from './dashboardStyles'
 
 export default function Dashboard(){
     return (
         <Container>
+            <StatusBar StatusBarStyle="auto" />
             <Header>
                 <UserWrapper>
             <UserInfo>
@@ -26,8 +30,17 @@ export default function Dashboard(){
                     <UserName>Andre</UserName>
                 </User>
             </UserInfo>
+            <Icon name='power' />
             </UserWrapper>
             </Header>
+
+                < ScrollCards 
+
+                >
+                    <HighlightCard />
+                    <HighlightCard />
+                    <HighlightCard />
+                </ScrollCards>
         </Container>
     )
 }

@@ -13,13 +13,52 @@ import {
     ScrollCards,
     Transactions,
     Title,
+    TransactionList,
 } from './dashboardStyles'
 
+
 import HighlightCard from '../components/HighlightCard'
-import TransactionCard from '../components/TransactionCard'
+import {TransactionCard , TransactionDataProps } from '../components/TransactionCard'
 
 
 export default function Dashboard(){
+
+    const data: TransactionDataProps[] = [
+        {
+            id: '1',
+            type: 'positive',
+            title: 'Desenvolvimento de site',
+            amount: 'R$ 12.000,00',
+            category: {
+                name: 'Vendas',
+                icon: 'dollar-sign',
+            },
+            date: '13/04/2021'
+        },
+        {
+            id: '2',
+            type: 'negative',
+            title: 'Hamburgueria',
+            amount: 'R$ 57,00',
+            category: {
+                name: 'Alimentação',
+                icon: 'coffee',
+            },
+            date: '10/04/2021'
+        },
+        {
+            id: '3',
+            type: 'negative',
+            title: 'Aluguel apartamento',
+            amount: 'R$ 2.300,00',
+            category: {
+                name: 'Casa',
+                icon: 'shopping-bag',
+            },
+            date: '09/04/2021'
+        },
+    ]
+
     return (
         <Container>
             <StatusBar />
@@ -59,7 +98,11 @@ export default function Dashboard(){
 
                 <Transactions>
                     <Title>Listagem</Title>
-                    <TransactionCard />
+                    <TransactionList 
+                        data={data}
+                        keyExtractor={ item => item.id}
+                        renderItem={ ({item}) => <TransactionCard data={item} />}
+                    />
                 </Transactions>
             
         </Container>

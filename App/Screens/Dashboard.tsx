@@ -1,9 +1,7 @@
 import React from 'react'
-import HighlightCard from '../components/HighlightCard'
 import { StatusBar} from 'react-native'
 import { 
     Container,
-    Title,
     Header,
     UserInfo,
     Photo,
@@ -13,7 +11,13 @@ import {
     UserWrapper,
     Icon,
     ScrollCards,
- } from './dashboardStyles'
+    Transactions,
+    Title,
+} from './dashboardStyles'
+
+import HighlightCard from '../components/HighlightCard'
+import TransactionCard from '../components/TransactionCard'
+
 
 export default function Dashboard(){
     return (
@@ -34,9 +38,7 @@ export default function Dashboard(){
             </UserWrapper>
             </Header>
 
-                < ScrollCards 
-
-                >
+                < ScrollCards >
                     <HighlightCard 
                         type='up' 
                         title='Entrada' 
@@ -54,6 +56,12 @@ export default function Dashboard(){
                         lastTransaction='De 1 à 6 de abril'/>
 
                 </ScrollCards>
+
+                <Transactions>
+                    <Title>Listagem</Title>
+                    <TransactionCard />
+                </Transactions>
+            
         </Container>
     )
 }

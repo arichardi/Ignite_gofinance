@@ -12,6 +12,7 @@ import {
 import AppInput from '../components/Forms/AppInput'
 import AppButton from '../components/Forms/AppButton'
 import TransactionTypeButton from '../components/Forms/TransactionTypeButton'
+import CategorySelect from '../components/Forms/CategorySelect'
 
 export default function Register(){
 
@@ -45,6 +46,9 @@ export default function Register(){
                             isActive={ transactionType === 'down'}
                         />
                     </TransactionTypes>
+
+                    <CategorySelect title='Categoria'/>
+
                 </Fields>
                 <AppButton title='Enviar'/>
             </Form>

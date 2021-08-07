@@ -6,6 +6,7 @@ import {useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from 
 import theme from './App/config/styles/theme';
 import Dashboard from './App/Screens/Dashboard';
 import Register from './App/Screens/Register';
+import CategoryScreen from './App/Screens/CategoryScreen';
 
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Register />
+      <CategoryScreen />
     </ThemeProvider>
   
   )

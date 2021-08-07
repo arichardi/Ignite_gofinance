@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Modal } from 'react-native'
+import { useForm } from 'react-hook-form'
 import {
     Container,
     Header,
@@ -10,10 +11,17 @@ import {
 } from './RegisterStyles'
 
 import AppInput from '../components/Forms/AppInput'
+import AppInputForm from '../components/Forms/AppInputForm'
 import AppButton from '../components/Forms/AppButton'
 import TransactionTypeButton from '../components/Forms/TransactionTypeButton'
 import CategorySelect from '../components/Forms/CategorySelect'
 import CategoryScreen from './CategoryScreen'
+
+interface FormData {
+    name: string;
+    amount: string;
+}
+
 
 export default function Register(){
 
@@ -25,6 +33,9 @@ export default function Register(){
         key: 'category',
         name: 'Categoria',
     });
+
+    const { control, handleSubmit} = useForm()
+
 
     //-------------------------------------------------------------------
 
@@ -41,6 +52,17 @@ export default function Register(){
         setCategoryModalOpen(false)
     }
 
+    function handleRegister(form: FormData){
+        const data = {
+            name: form.name,
+            amount: form.amount,
+            transactionType,
+            category: category.key
+        }
+        
+        console.log(data)
+    }
+
     //--------------------------------------------------------------------
 
     return (
@@ -51,8 +73,16 @@ export default function Register(){
 
             <Form>
                 <Fields>
-                    <AppInput placeholder='nome' />
-                    <AppInput placeholder='preço'/>
+                    <AppInputForm 
+                    placeholder='nome' 
+                    name="name"
+                    control={control}
+                    />
+                    <AppInputForm
+                    placeholder='preço'
+                    name="amount"
+                    control={control}
+                    />
                     <TransactionTypes>
                         <TransactionTypeButton
                             type='up'
@@ -71,7 +101,7 @@ export default function Register(){
                     <CategorySelect title={category.name} onPress={handleOpenCategoryModal}/>
 
                 </Fields>
-                <AppButton title='Enviar'/>
+                <AppButton title='Enviar' onPress={handleSubmit(handleRegister)} />
             </Form>
 
             <Modal visible={categoryModalOpen}>

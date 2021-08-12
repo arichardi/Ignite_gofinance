@@ -11,8 +11,6 @@ import {
     Name,
     Separator,
     Footer,
-    Button,
-    ButtonText,
 } from './CategoryScreenStyle'
 
 interface Category {

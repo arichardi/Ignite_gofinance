@@ -12,7 +12,6 @@ import {
     TransactionTypes,
 } from './RegisterStyles'
 
-import AppInput from '../components/Forms/AppInput'
 import AppInputForm from '../components/Forms/AppInputForm'
 import AppButton from '../components/Forms/AppButton'
 import TransactionTypeButton from '../components/Forms/TransactionTypeButton'

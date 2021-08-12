@@ -14,6 +14,7 @@ import {
     Transactions,
     Title,
     TransactionList,
+    LogoutButton,
 } from './dashboardStyles'
 
 
@@ -73,7 +74,11 @@ export default function Dashboard(){
                     <UserName>Andre</UserName>
                 </User>
             </UserInfo>
-            <Icon name='power' />
+
+            <LogoutButton onPress={ () => {}}>
+                <Icon name='power' />
+            </LogoutButton>
+
             </UserWrapper>
             </Header>
 

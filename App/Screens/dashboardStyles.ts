@@ -3,6 +3,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import { Feather } from '@expo/vector-icons'
 import { FlatList } from 'react-native'
 import {TransactionDataProps } from '../components/TransactionCard'
+import { BorderlessButton } from 'react-native-gesture-handler'
 
 export const Container = styled.View`
 
@@ -55,6 +56,10 @@ export const UserWrapper = styled.View`
     justify-content: space-between;
     align-items: center;
     margin-top: ${RFValue(24)}px;
+`;
+
+export const LogoutButton = styled(BorderlessButton)`
+    
 `;
 
 export const Icon = styled(Feather)`

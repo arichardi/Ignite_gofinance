@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useFocusEffect } from '@react-navigation/native'
 import { StatusBar} from 'react-native'
 import { 
     Container,
@@ -64,7 +65,12 @@ export default function Dashboard(){
 
     useEffect( () => {
         loadTransactions();
+   
     }, [])
+
+    useFocusEffect(useCallback( () => {
+        loadTransactions();
+    }, []));
 
     return (
         <Container>

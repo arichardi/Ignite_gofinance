@@ -1,12 +1,23 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import { ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { VictoryPie } from 'victory-native'
+import { addMonths, subMonths, format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { useTheme } from 'styled-components'
 import {
     Container,
     Header,
     Title,
     Content,
     ChartContainer,
+    MonthSelect,
+    MonthSelectIcon,
+    MonthSelectButton,
+    Month,
+    LoadContainer,
 } from './ResumeScreenStyle'
 
 import HistoryCard from '../components/HistoryCard'
@@ -36,9 +47,24 @@ export default function ResumeScreen(){
 
     //variables -----------------------------------------------
 
+    const theme = useTheme();
+    const [isLoading, setIsLoading] = useState(true)
     const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([])
+    const [selectedDate, setSelectedDate] = useState(new Date())
 
     //functions -----------------------------------------------
+
+    function handleDateChange(action: 'next' | 'prev'){
+        setIsLoading(true)
+
+        if(action === 'next'){
+            const newDate = addMonths(selectedDate, 1)
+            setSelectedDate(newDate)
+        }else{
+            const newDate = subMonths(selectedDate, 1)
+            setSelectedDate(newDate)
+        }
+    }
 
     async function loadData(){
         const dataKey = '@gofinance:Transactions';
@@ -46,7 +72,11 @@ export default function ResumeScreen(){
         const responseFormatted = response ? JSON.parse(response) : []
 
         const expensives = responseFormatted
-        .filter( (expensive: TransactionData) => expensive.type === 'negative')
+        .filter( (expensive: TransactionData) => 
+        expensive.type === 'negative' && 
+        new Date(expensive.date).getMonth() === selectedDate.getMonth() &&
+        new Date(expensive.date).getFullYear() === selectedDate.getFullYear() 
+        )
 
         const expensivesTotal = expensives
         .reduce( (acc: number, item: TransactionData) => {
@@ -89,12 +119,17 @@ export default function ResumeScreen(){
         })
 
         setTotalByCategories(totalByCategory)
+        setIsLoading(false)
 
     }
 
     useEffect( () => {
         loadData()
-    }, [])
+    }, [selectedDate])
+
+    useFocusEffect( useCallback( () => {
+        loadData();
+    }, []));
 
     //RN Screen Component --------------------------------------
 
@@ -103,6 +138,31 @@ export default function ResumeScreen(){
             <Header>
                 <Title>Resumo por Categoria</Title>
             </Header>
+
+            {
+            isLoading ? 
+            <LoadContainer>
+            <ActivityIndicator color={theme.colors.secondary} size='large'/>
+            </LoadContainer> :
+
+
+            <Content
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                    paddingHorizontal: 24,
+                    paddingBottom: useBottomTabBarHeight(),
+                }}
+            >
+
+            <MonthSelect>
+                <MonthSelectButton onPress={ () => handleDateChange('prev')}>
+                    <MonthSelectIcon name='chevron-left' />
+                </MonthSelectButton>
+                <Month> {format(selectedDate, 'MMM, yyyy', {locale: ptBR})} </Month>
+                <MonthSelectButton onPress={ () => handleDateChange('next')} >
+                    <MonthSelectIcon name='chevron-right' />
+                </MonthSelectButton>
+            </MonthSelect>
 
             <ChartContainer>
                 <VictoryPie
@@ -121,7 +181,6 @@ export default function ResumeScreen(){
                 />
             </ChartContainer>
 
-            <Content>
                 { totalByCategories.map( item => (
                 <HistoryCard 
                     key={item.key}
@@ -132,6 +191,7 @@ export default function ResumeScreen(){
                 }
             </Content>
 
+            }
         </Container>
     )
 }

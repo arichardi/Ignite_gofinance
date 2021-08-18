@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR';
 import { NavigationContainer } from '@react-navigation/native'
@@ -30,6 +31,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
+        <StatusBar backgroundColor={theme.colors.primary} />
       <AppRoutes/>
       </NavigationContainer>
     </ThemeProvider>

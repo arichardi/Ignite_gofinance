@@ -83,7 +83,6 @@ export default function ResumeScreen(){
             return acc + Number(item.amount);
         },0)
 
-        console.log(expensivesTotal)
 
         const totalByCategory: CategoryData[] = [];
 
@@ -92,7 +91,7 @@ export default function ResumeScreen(){
 
             expensives.forEach( (expensive: TransactionData) => {
                 if(expensive.category === category.key){
-                    categorySum =+ Number(expensive.amount);
+                    categorySum += Number(expensive.amount);
                 }
             })
 

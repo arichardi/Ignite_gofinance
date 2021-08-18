@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react'
+import { ActivityIndicator } from 'react-native'
+import { useTheme } from 'styled-components'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
 import { StatusBar} from 'react-native'
@@ -17,6 +19,7 @@ import {
     Title,
     TransactionList,
     LogoutButton,
+    LoadContainer,
 } from './dashboardStyles'
 
 
@@ -37,8 +40,10 @@ export default function Dashboard(){
 
     //variables --------------------------------
 
+    const [isLoading, setIsLoading ] = useState(true)
     const [ transactions, setTransactions ] = useState<TransactionDataProps[]>([])
     const [HighlightData, setHighlightData] = useState<HighlightData>({} as HighlightData)
+    const theme = useTheme();
 
     const dataKey = '@gofinance:Transactions'
   
@@ -98,6 +103,9 @@ export default function Dashboard(){
                 currency: 'BRL', 
                })}
         });
+
+        setIsLoading(false)
+
     }
 
     useEffect( () => {
@@ -111,6 +119,12 @@ export default function Dashboard(){
 
     return (
         <Container>
+            {
+                isLoading ? 
+                <LoadContainer>
+                   <ActivityIndicator color={theme.colors.secondary} size='large'/>
+                </LoadContainer> :
+            <>
             <StatusBar />
             <Header>
                 <UserWrapper>
@@ -158,7 +172,8 @@ export default function Dashboard(){
                         renderItem={ ({item}) => <TransactionCard data={item} />}
                     />
                 </Transactions>
-            
+            </>
+            }
         </Container>
     )
 }
